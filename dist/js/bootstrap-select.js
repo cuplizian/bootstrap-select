@@ -681,7 +681,9 @@
     },
 
     setWidth: function () {
-      if (this.options.width == 'auto') {
+      var setWidth = this.$element.data('width') !== undefined ? this.$element.data('width') : this.options.width;
+
+      if (setWidth == 'auto') {
         this.$menu.css('min-width', '0');
 
         // Get correct width if element hidden
@@ -692,21 +694,21 @@
 
         // Set width to whatever's larger, button title or longest option
         this.$newElement.css('width', Math.max(parseInt(ulWidth), parseInt(btnWidth)) + 'px');
-      } else if (this.options.width == 'fit') {
+      } else if (setWidth == 'fit') {
         // Remove inline min-width so width can be changed from 'auto'
         this.$menu.css('min-width', '');
         this.$newElement.css('width', '').addClass('fit-width');
-      } else if (this.options.width) {
+      } else if (setWidth) {
         // Remove inline min-width so width can be changed from 'auto'
         this.$menu.css('min-width', '');
-        this.$newElement.css('width', this.options.width);
+        this.$newElement.css('width', setWidth);
       } else {
         // Remove inline min-width/width so width can be changed
         this.$menu.css('min-width', '');
         this.$newElement.css('width', '');
       }
       // Remove fit-width class if width is changed programmatically
-      if (this.$newElement.hasClass('fit-width') && this.options.width !== 'fit') {
+      if (this.$newElement.hasClass('fit-width') && setWidth !== 'fit') {
         this.$newElement.removeClass('fit-width');
       }
     },
